@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 app.listen(3002, () => {
-  console.log("server is running on port 3307");
+  console.log("server is running on port 3002");
 });
 
 // create our dataBase
@@ -16,7 +16,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "signup",
+  database: "admin",
   port:3307
 });
 db.connect((err) => {
@@ -30,15 +30,15 @@ db.connect((err) => {
 //Create a router to the server that will register a user
 
 app.post("/register", (req, res) => {
-  const sentName = req.body.Name;
+  const sentUserName = req.body.Username;
   const sentEmail = req.body.Email;
   const sentPassword = req.body.Password;
 
   //create SQL Statement to insert the user to the DataBase Table user
-  const SQL = "INSERT INTO user (name, email, password) VALUES (?,?,?)";
+  const SQL = "INSERT INTO Users (username, email, password) VALUES (?,?,?)";
 
   // We are goint to enter these values through a variable
-  const Values = [sentName, sentEmail, sentPassword];
+  const Values = [sentUserName, sentEmail, sentPassword];
 
   //Query to execute the sq statement above
   db.query(SQL, Values, (err, results) => {
@@ -57,7 +57,7 @@ app.post("/login", (req, res) => {
   const sendLoginPassword = req.body.LoginPassword;
 
   //create SQL Statement to insert the user to the DataBase Table user
-  const SQL = "SELECT * FROM user WHERE username = ? && password = ?";
+  const SQL = "SELECT * FROM Users WHERE username = ? && password = ?";
 
   // We are goint to enter these values through a variable
   const Values = [sendLoginUserName, sendLoginPassword];

@@ -13,7 +13,7 @@ import { AiOutlineSwapRight } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 
 export const Register = () => {
-  const [name, setName] = useState("");
+  const [userName, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +21,7 @@ export const Register = () => {
   const createUser = () => {
     Axios.post("http://localhost:3002/register", {
       // create variable to send to the server though the router
-      Name: name,
+      Username: userName,
       Email: email,
       Password: password,
     }).then(() => {
@@ -54,7 +54,7 @@ export const Register = () => {
                 <input
                   type="text"
                   id="username"
-                  placeholder="Enter Name"
+                  placeholder="Enter UserName"
                   onChange={(event) => {
                     setName(event.target.value);
                   }}
