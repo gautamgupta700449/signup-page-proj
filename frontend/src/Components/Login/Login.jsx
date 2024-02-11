@@ -24,7 +24,7 @@ export const Login = () => {
   // onClick function
   const loginUser = (e) => {
     //lets prevent submitting
-    e.preventDefault();
+    e.preventDefault()
     Axios.post("http://localhost:3002/login", {
         // create variable to send to the server though the router
         LoginUserName: loginUserName,
@@ -83,9 +83,9 @@ export const Login = () => {
               <div className="input flex">
                 <FaUserShield className="icon" />
                 <input
-                  type="text"
+                  type="username"
                   id="username"
-                  placeholder="Enter Email"
+                  placeholder="Enter Username"
                   onChange={(event) => {
                     setLoginUserName(event.target.value);
                   }}

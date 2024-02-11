@@ -52,22 +52,48 @@ app.post("/register", (req, res) => {
 });
 
 //lets create another router
+// app.post("/login", (req, res) => {
+//   const sendLoginUserName = req.body.LoginUserName;
+//   const sendLoginPassword = req.body.LoginPassword;
+
+//   //create SQL Statement to insert the user to the DataBase Table user
+//   const SQL = "SELECT * FROM Users WHERE username = ? && password = ?";
+
+//   // We are goint to enter these values through a variable
+//   const Values = [sendLoginUserName, sendLoginPassword];
+//   if (err) {
+//     res.send({ error: err });
+//   }
+//   if (results.length > 0) {
+//     res.send(results);
+//   } else {
+//     res.send({ message: "Credentials Don't match!" });
+//     //This should be good, lets try to
+//   }
+// });
+
+
+//lets create another router
 app.post("/login", (req, res) => {
-  const sendLoginUserName = req.body.LoginUserName;
-  const sendLoginPassword = req.body.LoginPassword;
+  const sentLoginUserName = req.body.LoginUserName;
+  const sentLoginPassword = req.body.LoginPassword;
 
-  //create SQL Statement to insert the user to the DataBase Table user
-  const SQL = "SELECT * FROM Users WHERE username = ? && password = ?";
+  //create SQL Statement to retrieve the user from the DataBase Table user
+  const SQL = "SELECT * FROM Users WHERE username = ? AND password = ?";
 
-  // We are goint to enter these values through a variable
-  const Values = [sendLoginUserName, sendLoginPassword];
-  if (err) {
-    res.send({ error: err });
-  }
-  if (results.length > 0) {
-    res.send(results);
-  } else {
-    res.send({ message: "Credentials Don't match!" });
-    //This should be good, lets try to
-  }
+  // We are going to enter these values through a variable
+  const Values = [sentLoginUserName, sentLoginPassword];
+
+  // Query to execute the SQL statement
+  db.query(SQL, Values, (err, results) => {
+    if (err) {
+      res.send({ error: err }); // Sending error response if query encounters an error
+    } else {
+      if (results.length > 0) {
+        res.send(results); // Sending user data if user is found
+      } else {
+        res.send({ message: "Credentials Don't match!" }); // Sending error message if no user found
+      }
+    }
+  });
 });
